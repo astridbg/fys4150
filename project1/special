@@ -5,7 +5,6 @@
 #include <string>
 #include <armadillo>
 #include "time.h"
-
 // use namespace for output and input
 using namespace std;
 using namespace arma;

@@ -5,6 +5,7 @@
 #include <string>
 #include <armadillo>
 #include "time.h"
+#include "lib.h"
 
 // use namespace for output and input
 using namespace std;
