@@ -79,12 +79,12 @@ int main(int argc, char *argv[]){
 
     finish = clock(); // finish time of computing
     double time = ((double)(finish - start)/CLOCKS_PER_SEC);
-    cout << setprecision(8) << "Time used for " << n << " gridpoints: "<< time << endl;
+    cout << setprecision(32) << "Time used for " << n << " gridpoints: "<< time << endl;
 
     // Opening file and writing out results
     ofile.open(outputfile);
     ofile << setiosflags(ios::showpoint | ios::uppercase);
-    ofile << "      x:        approx:     exact:      relative error:" << endl;
+    ofile << "     x:             approx:        exact:         relative error:" << endl;
     for (int i = 0; i < n+2; i++){
       double RelErr = fabs((v(i)-u(x(i)))/u(x(i))); // Compute relative error
       ofile << setw(15) << setprecision(8) << x(i);

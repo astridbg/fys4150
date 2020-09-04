@@ -60,15 +60,14 @@ int main(int argc, char *argv[]){
     // Compute elapsed time
     clock_t start, finish; // declaring start and finish time
     start = clock(); // start time of computing
+
     // Forward substitution
-    c_new(0) = c(0)/b(0);
-    d_new(0) = d(0)/b(0);
-    for(int i = 1; i < n-1; i++){
-      double b_new = b(i) - a(i-1)*c_new(i-1);
-      c_new(i) = c(i)/b_new;
-      d_new(i) = (d(i) - a(i-1)*d_new(i-1))/b_new;
+    for(int i = 0; i < n; i++){
+      c_new(i) = -((double) i+1)/(i+2);
+      for(int j = 0; j <= i; j++){
+        d_new(i) += ((double) j+1)/(i+2)*d(j);
+      }
     }
-    d_new(n-1) = (d(n-1) - a(n-2)*d_new(n-2))/(b(n-1) - a(n-2)*c_new(n-2));
 
     // Backward substitution
     v(n-1) = d_new(n-1);
@@ -78,12 +77,12 @@ int main(int argc, char *argv[]){
 
     finish = clock(); // finish time of computing
     double time = ((double)(finish - start)/CLOCKS_PER_SEC);
-    cout << setprecision(8) << "Time used for " << n << " gridpoints: "<< time << endl;
+    cout << setprecision(32) << "Time used for " << n << " gridpoints: "<< time << endl;
 
     // Opening file and writing out results
     ofile.open(outputfile);
     ofile << setiosflags(ios::showpoint | ios::uppercase);
-    ofile << "      x:        approx:     exact:      relative error:" << endl;
+    ofile << "     x:             approx:        exact:         relative error:" << endl;
     for (int i = 0; i < n+2; i++){
       double RelErr = fabs((v(i)-u(x(i)))/u(x(i))); // Compute relative error
       ofile << setw(15) << setprecision(8) << x(i);
