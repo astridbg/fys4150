@@ -55,6 +55,7 @@ int main(int argc, char *argv[]){
       a(i) = -1.; b(i) = 2.; c(i) = -1.;
       x(i+1) = (i+1)*h;
       d(i) = hh*f(x(i+1));
+      c_new(i) = -(i+1.)/(i+2.);
     }
 
     // Compute elapsed time
@@ -62,11 +63,11 @@ int main(int argc, char *argv[]){
     start = clock(); // start time of computing
 
     // Forward substitution
-    for(int i = 0; i < n; i++){
-      c_new(i) = -((double) i+1)/(i+2);
-      for(int j = 0; j <= i; j++){
-        d_new(i) += ((double) j+1)/(i+2)*d(j);
-      }
+    d_new(0) = d(0)*(-c_new(0));
+    for(int i = 1; i < n; i++){
+      d_new(i) = (d(i) + d_new(i-1))*(-c_new(i));
+      //for(int j = 0; j <= i; j++){
+      //  d_new(i) += ((double) j+1)/(i+2)*d(j);}
     }
 
     // Backward substitution
